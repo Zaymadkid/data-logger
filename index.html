@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Girlfriend?</title>
+    <title>Will You Be My Girlfriend?</title>
     <style>
         body {
             margin: 0;
@@ -18,23 +18,18 @@
 
         .container {
             text-align: center;
-            padding: 20px;
-            background-color: #ffb6c1;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
         .kitty-image {
-            max-width: 200px;
-            height: auto;
+            max-width: 150px;
             margin-bottom: 20px;
         }
 
         .question-text {
             font-size: 24px;
-            color: #ff69b4;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .buttons {
@@ -48,25 +43,51 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: #d8bfd8;
+            background-color: #d8a7d8;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: transform 0.2s;
         }
 
         button:hover {
-            background-color: #c71585;
+            background-color: #c68fc6;
+        }
+
+        .moving-btn:hover {
+            animation: move 0.3s ease-in-out infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(-20px); }
+        }
+
+        .response {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://via.placeholder.com/200x200.png?text=Hello+Kitty" alt="Hello Kitty" class="kitty-image">
+        <img src="https://via.placeholder.com/150?text=Hello+Kitty" alt="Hello Kitty" class="kitty-image">
         <div class="question-text">Will you be my girlfriend?</div>
         <div class="buttons">
-            <button onclick="alert('Yay! We\'re a digital couple now! 💕')">Yes</button>
-            <button onclick="alert('Aw, maybe next time! 😿')">No</button>
+            <button onclick="showResponse()">Yes</button>
+            <button class="moving-btn">No</button>
         </div>
+        <div class="response" id="responseText">Yay! You said yes!</div>
     </div>
+
+    <script>
+        function showResponse() {
+            document.getElementById('responseText').style.display = 'block';
+            document.querySelector('.buttons').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
