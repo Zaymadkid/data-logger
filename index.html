@@ -1,90 +1,141 @@
-body {
-    zoom: 0.6;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150vh;
-    background-color: #fabeff;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Girlfriend?</title>
+    <style>
+        body {
+            zoom: 0.6;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            background-image: url('https://i.pinimg.com/736x/3a/89/6d/3a896dc76982ec3f0d49316c9fb2de4c.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
-.container {
-    text-align: center;
-}
+        .container {
+            text-align: center;
+        }
 
-.image-container {
-    position: relative;
-    display: inline-block;
-}
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
 
-.big-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
+        .big-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
 
-.text-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-    margin-top: 20px;
-}
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 20px;
+        }
 
-button,
-button:focus {
-  font-size: 45px;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  padding: 20px 30px;
-  border-radius: 0.7rem;
-  background-image: linear-gradient(rgb(251, 139, 255), rgb(233, 129, 254));
-  border: 2px solid rgb(50, 50, 50);
-  border-bottom: 5px solid rgb(50, 50, 50);
-  box-shadow: 0px 1px 6px 0px rgb(225, 129, 254);
-  transform: translate(0, -3px);
-  cursor: pointer;
-}
+        button,
+        button:focus {
+            font-size: 45px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            padding: 20px 30px;
+            border-radius: 0.7rem;
+            background-image: linear-gradient(rgb(251, 139, 255), rgb(233, 129, 254));
+            border: 2px solid rgb(50, 50, 50);
+            border-bottom: 5px solid rgb(50, 50, 50);
+            box-shadow: 0px 1px 6px 0px rgb(225, 129, 254);
+            transform: translate(0, -3px);
+            cursor: pointer;
+        }
 
-button:active {
-  border-bottom: 2px solid rgb(50, 50, 50);
-}
+        button:active {
+            border-bottom: 2px solid rgb(50, 50, 50);
+        }
 
-.moving-btn {
-    position: relative;
+        .moving-btn {
+            position: relative;
+        }
 
-}
+        .moving-btn:hover {
+            animation: move 0.3s ease-in-out;
+        }
 
-.center-text {
-    margin-top: 20px;
-    color: #fff;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 80px;
-    text-shadow:
-    0px -1px 2px #fff,
-    0px -3px 7px rgb(255, 175, 222),
-    0px -4px 14px rgb(255, 142, 240),
-    0px -6px 25px rgb(255, 6, 234);
-}
+        @keyframes move {
+            0% { transform: translate(0, -3px); }
+            50% { transform: translate(100px, -3px); }
+            100% { transform: translate(-100px, -3px); }
+        }
 
-.video-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-    background-color: #fabeff;
-}
+        .center-text {
+            margin-top: 20px;
+            color: #fff;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 80px;
+            text-shadow:
+                0px -1px 2px #fff,
+                0px -3px 7px rgb(255, 175, 222),
+                0px -4px 14px rgb(255, 142, 240),
+                0px -6px 25px rgb(255, 6, 234);
+        }
+
+        .video-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            background-color: #fabeff;
+        }
+
+        .video-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <div class="text-overlay">Will You Be My Girlfriend?</div>
+        </div>
+        <div class="center-text">Will You Be My Girlfriend?</div>
+        <div class="buttons">
+            <button onclick="showGif()">Yes</button>
+            <button class="moving-btn">No</button>
+        </div>
+        <div class="video-container" id="gifContainer">
+            <img src="https://i.pinimg.com/originals/ec/e4/ef/ece4ef519acc193968d6adc55ff315c1.gif" alt="Response GIF">
+        </div>
+    </div>
+
+    <script>
+        function showGif() {
+            document.getElementById('gifContainer').style.display = 'flex';
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('.center-text').textContent = 'Yay! You said yes!';
+        }
+    </script>
+</body>
+</html>
