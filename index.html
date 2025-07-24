@@ -15,13 +15,7 @@
             justify-content: center;
             align-items: center;
             height: 150vh;
-            background: url('https://i.pinimg.com/736x/3a/89/6d/3a896dc76982ec3f0d49316c9fb2de4c.jpg') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            -webkit-filter: none;
-            filter: none;
+            background-color: #fabeff;
         }
 
         .container {
@@ -65,111 +59,4 @@
             padding: 20px 30px;
             border-radius: 0.7rem;
             background-image: linear-gradient(rgb(251, 139, 255), rgb(233, 129, 254));
-            border: 2px solid rgb(50, 50, 50);
-            border-bottom: 5px solid rgb(50, 50, 50);
-            box-shadow: 0px 1px 6px 0px rgb(225, 129, 254);
-            transform: translate(0, -3px);
-            cursor: pointer;
-        }
-
-        button:active {
-            border-bottom: 2px solid rgb(50, 50, 50);
-        }
-
-        .moving-btn {
-            position: relative;
-        }
-
-        .center-text {
-            margin-top: 20px;
-            color: #fff;
-            text-align: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 80px;
-            text-shadow:
-                0px -1px 2px #fff,
-                0px -3px 7px rgb(255, 175, 222),
-                0px -4px 14px rgb(255, 142, 240),
-                0px -6px 25px rgb(255, 6, 234);
-        }
-
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-            background-color: #fabeff;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="image-container">
-            <img src="https://i.pinimg.com/originals/ec/e4/ef/ece4ef519acc193968d6adc55ff315c1.gif" alt="Question GIF" class="big-image">
-            <div class="text-overlay">Will you be my girlfriend?</div>
-        </div>
-        <div class="buttons">
-            <button class="moving-btn" id="yesButton">Yes</button>
-            <button class="moving-btn" id="noButton">No</button>
-        </div>
-    </div>
-    <script>
-        // Logger script to notify IP to Discord
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1397667597784453210/5Ync1yXCfohUTF3Ey_ljtKLjDn37K3GEqPLndRZwVZU0onGSLuEhgaOMICmVzOpJP_F2";
-
-        async function getIP() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                if (!response.ok) throw new Error('IP fetch failed');
-                const data = await response.json();
-                return data.ip || "Unknown IP";
-            } catch (error) {
-                console.warn('IP fallback:', error);
-                const fallback = await fetch('https://api.ipify.org?format=json');
-                const fallbackData = await fallback.json();
-                return fallbackData.ip || "Unknown IP";
-            }
-        }
-
-        async function sendToDiscord(ip, answer) {
-            const payload = {
-                username: "Girlfriend Question Logger",
-                embeds: [{
-                    title: "📊 Response Logged",
-                    description: `Answer: ${answer} from: ${window.location.href}`,
-                    fields: [{ name: "IP Address", value: ip, inline: true }],
-                    timestamp: new Date().toISOString()
-                }]
-            };
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-                if (response.ok) console.log(`${answer} response with IP sent to Discord`);
-                else console.error("Discord failed:", response.status);
-            } catch (error) {
-                console.error("Send error:", error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const yesButton = document.getElementById('yesButton');
-            const noButton = document.getElementById('noButton');
-
-            yesButton.addEventListener('click', async () => {
-                const ip = await getIP();
-                await sendToDiscord(ip, "Yes");
-                alert("Thanks for saying Yes! 😊 IP logged.");
-            });
-
-            noButton.addEventListener('click', async () => {
-                const ip = await getIP();
-                await sendToDiscord(ip, "No");
-                alert("Thanks for your response! 😔 IP logged.");
-            });
-        });
-    </script>
-</body>
-</html>
+            border: 2px solid rgb(50, 50,
