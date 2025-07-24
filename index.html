@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Girlfriend?</title>
+    <title>Original Popup</title>
     <style>
         body {
             zoom: 0.6;
@@ -15,11 +15,7 @@
             justify-content: center;
             align-items: center;
             height: 150vh;
-            background: url('https://i.pinimg.com/736x/3a/89/6d/3a896dc76982ec3f0d49316c9fb2de4c.jpg') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+            background-color: #fabeff;
         }
 
         .container {
@@ -100,15 +96,22 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: transparent; background: url('') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <video autoplay muted loop id="background-video" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+        <source src="https://cdn.discordapp.com/attachments/1396563111569526924/1397849250930495558/video.mov?ex=68833810&is=6881e690&hm=a592d7adecee435d5e602cd5a98f818515a6b72a750b2a4b4ee26cb679dbe98d" type="video/mov">
+        Your browser does not support the video tag.
+    </video>
     <div class="container">
         <div class="image-container">
-            <img src="https://i.pinimg.com/originals/ec/e4/ef/ece4ef519acc193968d6adc55ff315c1.gif" alt="Question GIF" class="big-image">
-            <div class="text-overlay">Will you be my girlfriend?</div>
+            <img src="https://via.placeholder.com/400" alt="Your Picture Here" class="big-image">
+            <div class="text-overlay">Welcome!</div>
         </div>
+        <div class="center-text">Original Design</div>
         <div class="buttons">
-            <button class="moving-btn">Yes</button>
-            <button class="moving-btn">No</button>
+            <button class="moving-btn">Click Me</button>
+        </div>
+        <div class="video-container">
+            <!-- Optional additional video if needed -->
         </div>
     </div>
 </body>
